@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     const cover = formData.get("cover");
     if (formData.get("movieId")) params.movieId = formData.get("movieId");
     if (formData.get("title")) params.title = formData.get("title");
+    if (formData.get("isShowing")) params.isShowing = formData.get("isShowing");
     if (formData.get("description"))
       params.description = formData.get("description");
     if (formData.get("casts"))

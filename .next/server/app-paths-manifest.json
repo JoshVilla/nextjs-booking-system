@@ -1,6 +1,6 @@
 {
-  "/api/movie/editMovie/route": "app/api/movie/editMovie/route.js",
   "/api/movie/route": "app/api/movie/route.js",
+  "/api/movie/editMovie/route": "app/api/movie/editMovie/route.js",
   "/page": "app/page.js",
   "/admin/page": "app/admin/page.js",
   "/admin/movies/page": "app/admin/movies/page.js"

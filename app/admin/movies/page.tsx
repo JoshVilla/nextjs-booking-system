@@ -1,10 +1,19 @@
 "use client";
 
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Trash2, Loader2 } from "lucide-react";
+
 import TitlePage from "@/components/titlePage/titlePage";
 import AddMovie from "./addMovie";
-import { useEffect, useState } from "react";
-import { deleteMovie, getMovies } from "@/app/service/api";
-import { IMovies } from "@/app/service/types";
+import EditMovie from "./editMovie";
+import SearchForm from "@/components/searchForm/searchForm";
+import Captcha from "@/components/captcha/captcha";
+import NoData from "@/components/nodata/noData";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Form, FormControl, FormItem, FormField } from "@/components/ui/form";
 import {
   Table,
   TableHead,
@@ -13,23 +22,25 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
+
+import { deleteMovie, editMovie, getMovies } from "@/app/service/api";
+import { IMovies } from "@/app/service/types";
 import { tableHeaders } from "./tableProps";
-import SearchForm from "@/components/searchForm/searchForm";
 import { searchProps } from "./searchProps";
-import Captcha from "@/components/captcha/captcha";
-import { Button } from "@/components/ui/button";
-import { Trash2, Loader2 } from "lucide-react";
-import { useToast } from "@/app/hooks/use-toast";
-import NoData from "@/components/nodata/noData";
-import EditMovie from "./editMovie";
+
 const MoviesPage = () => {
-  const { toast } = useToast();
+  const form = useForm({
+    defaultValues: {
+      isShowing: false,
+    },
+  });
+
   const [movies, setMovies] = useState<IMovies[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
   const [openOtp, setOpenOtp] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
 
-  const getMoviesData = async () => {
+  const getMoviesData = useCallback(async () => {
     try {
       const response = await getMovies({});
       if (response.data) {
@@ -37,9 +48,30 @@ const MoviesPage = () => {
         setGenres(response.genres || []);
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to fetch movies. Please try again.");
+      console.error(error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    getMoviesData();
+  }, [getMoviesData]);
+
+  const newSearchProps = useMemo(
+    () => [
+      ...searchProps,
+      {
+        name: "genre",
+        type: "select",
+        placeholder: "Select a genre",
+        options: genres.map((genre) => ({
+          value: genre,
+          label: genre,
+        })),
+      },
+    ],
+    [genres]
+  );
 
   const handleOtpVerified = (isMatch: boolean) => {
     if (isMatch) {
@@ -48,38 +80,45 @@ const MoviesPage = () => {
     }
   };
 
-  const newSearchProps = [
-    ...searchProps,
-    {
-      name: "genre",
-      type: "select",
-      placeholder: "Select a genre",
-      options: genres.map((genre) => ({
-        value: genre,
-        label: genre,
-      })),
-    },
-  ];
-
   const handleDeleteMovie = async (movieId: string) => {
     try {
+      setId(movieId);
       const response = await deleteMovie({ movieId });
       if (response.message) {
         await getMoviesData();
         setId("");
-        toast({
-          title: "Success",
-          description: response.message,
-        });
+        toast.success(response.message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to delete movie.");
+      console.error(error);
     }
   };
 
-  useEffect(() => {
-    getMoviesData();
-  }, []);
+  const handleToggleShowing = async (movieId: string, val: boolean) => {
+    try {
+      const formData = new FormData();
+      formData.append("movieId", movieId);
+      formData.append("isShowing", val.toString());
+      const response = await editMovie(formData);
+
+      if (response.message) {
+        toast.success(response.message);
+        await getMoviesData();
+      } else {
+        // If the request fails, revert the UI
+        setMovies((prevMovies) =>
+          prevMovies.map((movie) =>
+            movie._id === movieId ? { ...movie, isShowing: !val } : movie
+          )
+        );
+        toast.error("Failed to update movie status.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating movie status.");
+    }
+  };
 
   return (
     <div className="w-full">
@@ -109,22 +148,48 @@ const MoviesPage = () => {
                 <TableCell>{movie.time}</TableCell>
                 <TableCell>{movie.genres.join(", ")}</TableCell>
                 <TableCell>
+                  <Form {...form}>
+                    <form>
+                      <FormField
+                        control={form.control}
+                        name={`isShowing`}
+                        defaultValue={movie.isShowing}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Switch
+                                id={`isShowing-${movie._id}`}
+                                checked={movie.isShowing}
+                                onCheckedChange={(val) => {
+                                  field.onChange(val);
+                                  handleToggleShowing(movie._id, val);
+                                }}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </form>
+                  </Form>
+                </TableCell>
+                <TableCell>
                   <div className="flex items-center gap-2">
                     <EditMovie record={movie} refreshMovies={getMoviesData} />
-                    {id === movie._id ? (
-                      <Loader2 className="animate-spin" size={16} />
-                    ) : (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          setOpenOtp(true);
-                          setId(movie._id);
-                        }}
-                      >
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        setOpenOtp(true);
+                        setId(movie._id);
+                      }}
+                      disabled={id === movie._id}
+                    >
+                      {id === movie._id ? (
+                        <Loader2 className="animate-spin" size={16} />
+                      ) : (
                         <Trash2 />
-                      </Button>
-                    )}
+                      )}
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>

@@ -40,6 +40,7 @@ export interface IMovies {
   description: string;
   director: string;
   producer: string;
+  isShowing: boolean;
   distributor: string;
   createdAt: string;
   updatedAt: string;

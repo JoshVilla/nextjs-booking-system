@@ -29,6 +29,10 @@ export const tableHeaders: ITableHeader[] = [
     key: "genres",
   },
   {
+    title: "Now Showing",
+    key: "nowShowing",
+  },
+  {
     title: "Actions",
     key: "actions",
   },
