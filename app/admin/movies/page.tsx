@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Trash2, Loader2 } from "lucide-react";
+import { Trash2, Loader2, Eye } from "lucide-react";
 
 import TitlePage from "@/components/titlePage/titlePage";
 import AddMovie from "./addMovie";
@@ -27,6 +27,9 @@ import { deleteMovie, editMovie, getMovies } from "@/app/service/api";
 import { IMovies } from "@/app/service/types";
 import { tableHeaders } from "./tableProps";
 import { searchProps } from "./searchProps";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { setMovie } from "@/app/redux/slices/movieSlice";
 
 const MoviesPage = () => {
   const form = useForm({
@@ -34,11 +37,12 @@ const MoviesPage = () => {
       isShowing: false,
     },
   });
-
+  const router = useRouter();
   const [movies, setMovies] = useState<IMovies[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
   const [openOtp, setOpenOtp] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
+  const dispatch = useDispatch();
 
   const getMoviesData = useCallback(async () => {
     try {
@@ -174,6 +178,16 @@ const MoviesPage = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        router.push(`/admin/movies/${movie._id}`);
+                        dispatch(setMovie(movie));
+                      }}
+                    >
+                      <Eye size={16} />
+                    </Button>
                     <EditMovie record={movie} refreshMovies={getMoviesData} />
                     <Button
                       variant="ghost"

@@ -44,7 +44,7 @@ const Cinemas = () => {
       <div className="mt-4">
         <AddCinema handleAddData={handleAddData} />
 
-        <div className="mt-4 flex gap-4 flex-wrap">
+        <div className="mt-10 flex gap-4 flex-wrap">
           {cinemas.map((cinema, index) => (
             <motion.div
               key={cinema._id}

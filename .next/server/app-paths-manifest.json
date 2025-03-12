@@ -1,8 +1,4 @@
 {
-  "/api/cinema/route": "app/api/cinema/route.js",
-  "/api/cinema/deleteCinema/route": "app/api/cinema/deleteCinema/route.js",
-  "/api/cinema/editCinema/route": "app/api/cinema/editCinema/route.js",
-  "/page": "app/page.js",
-  "/admin/cinemas/page": "app/admin/cinemas/page.js",
-  "/admin/movies/page": "app/admin/movies/page.js"
+  "/admin/movies/page": "app/admin/movies/page.js",
+  "/admin/movies/[id]/page": "app/admin/movies/[id]/page.js"
 }
