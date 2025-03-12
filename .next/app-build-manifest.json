@@ -31,20 +31,30 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/movie/route.js"
     ],
-    "/api/movie/deleteMovie/route": [
+    "/admin/cinemas/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/movie/deleteMovie/route.js"
+      "static/chunks/app/admin/cinemas/page.js"
     ],
-    "/api/movie/addMovie/route": [
+    "/api/cinema/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/movie/addMovie/route.js"
+      "static/chunks/app/api/cinema/route.js"
     ],
-    "/api/movie/editMovie/route": [
+    "/api/cinema/addCinema/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/movie/editMovie/route.js"
+      "static/chunks/app/api/cinema/addCinema/route.js"
+    ],
+    "/api/cinema/editCinema/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/cinema/editCinema/route.js"
+    ],
+    "/api/cinema/deleteCinema/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/cinema/deleteCinema/route.js"
     ]
   }
 }

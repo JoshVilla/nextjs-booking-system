@@ -5,7 +5,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
-    const { page, limit, title, genre } = await request.json();
+    const { page, limit, title, genre, isShowing } = await request.json();
     let params: any = {};
     if (title) {
       params.title = title;
@@ -18,6 +18,9 @@ export async function POST(request: NextRequest) {
     }
     if (limit) {
       params.limit = limit;
+    }
+    if (isShowing !== undefined) {
+      params.isShowing = isShowing;
     }
 
     const movies = await Movie.find(params).skip(0).limit(10);

@@ -64,3 +64,28 @@ export interface IEditMovieParams {
   producer?: string;
   distributor?: string;
 }
+
+export interface IAddCinemaParams {
+  name: string;
+  isOpen: boolean;
+}
+
+export interface ICinema {
+  _id: string;
+  name: string;
+  isOpen: boolean;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  backgroundCode: number;
+}
+
+export interface IEditCinemaParams {
+  cinemaId: string;
+  name: string;
+  isOpen: boolean;
+}
+
+export interface IDeleteCinemaParams {
+  cinemaId: string;
+}

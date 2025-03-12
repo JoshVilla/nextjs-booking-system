@@ -6,6 +6,7 @@ import {
   Inbox,
   Search,
   Settings,
+  Theater,
 } from "lucide-react";
 
 import {
@@ -35,6 +36,11 @@ const items = [
     title: "Bookings",
     url: "/admin/bookings",
     icon: Calendar,
+  },
+  {
+    title: "Cinemas",
+    url: "/admin/cinemas",
+    icon: Theater,
   },
 ];
 
