@@ -1,7 +1,8 @@
 {
   "/api/movie/route": "app/api/movie/route.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/movie/editMovie/route": "app/api/movie/editMovie/route.js",
   "/page": "app/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/admin/movies/page": "app/admin/movies/page.js"
+  "/admin/movies/page": "app/admin/movies/page.js",
+  "/admin/page": "app/admin/page.js"
 }

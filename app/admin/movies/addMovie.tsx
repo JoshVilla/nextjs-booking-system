@@ -71,6 +71,9 @@ const AddMovie = ({
 
       if (response.message) {
         setLoading(false);
+        form.reset(); // Reset the form when the dialog closes
+        setPosterPreview(null);
+        setCoverPreview(null);
         // @ts-ignore
         setMovies((prevMovies: IMovies[]) => [...prevMovies, response.data]);
         setOpen(false);

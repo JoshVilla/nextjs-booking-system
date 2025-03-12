@@ -45,3 +45,21 @@ export interface IMovies {
   updatedAt: string;
   __v: number;
 }
+
+export interface IDeleteMovieParams {
+  movieId: string;
+}
+
+export interface IEditMovieParams {
+  movieId: string;
+  title?: string;
+  poster?: File;
+  cover?: File;
+  casts?: string[];
+  genres?: string[];
+  time?: string;
+  description?: string;
+  director?: string;
+  producer?: string;
+  distributor?: string;
+}

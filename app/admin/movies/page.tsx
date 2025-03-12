@@ -3,7 +3,7 @@
 import TitlePage from "@/components/titlePage/titlePage";
 import AddMovie from "./addMovie";
 import { useEffect, useState } from "react";
-import { getMovies } from "@/app/service/api";
+import { deleteMovie, getMovies } from "@/app/service/api";
 import { IMovies } from "@/app/service/types";
 import {
   Table,
@@ -16,20 +16,35 @@ import {
 import { tableHeaders } from "./tableProps";
 import SearchForm from "@/components/searchForm/searchForm";
 import { searchProps } from "./searchProps";
+import Captcha from "@/components/captcha/captcha";
+import { Button } from "@/components/ui/button";
+import { Trash2, Loader2 } from "lucide-react";
+import { useToast } from "@/app/hooks/use-toast";
+import NoData from "@/components/nodata/noData";
+import EditMovie from "./editMovie";
 const MoviesPage = () => {
+  const { toast } = useToast();
   const [movies, setMovies] = useState<IMovies[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
+  const [openOtp, setOpenOtp] = useState<boolean>(false);
+  const [id, setId] = useState<string>("");
 
   const getMoviesData = async () => {
     try {
       const response = await getMovies({});
-      console.log(response);
       if (response.data) {
         setMovies(response.data);
         setGenres(response.genres || []);
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleOtpVerified = (isMatch: boolean) => {
+    if (isMatch) {
+      setOpenOtp(false);
+      handleDeleteMovie(id);
     }
   };
 
@@ -45,9 +60,26 @@ const MoviesPage = () => {
     },
   ];
 
+  const handleDeleteMovie = async (movieId: string) => {
+    try {
+      const response = await deleteMovie({ movieId });
+      if (response.message) {
+        await getMoviesData();
+        setId("");
+        toast({
+          title: "Success",
+          description: response.message,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getMoviesData();
   }, []);
+
   return (
     <div className="w-full">
       <TitlePage title="Movies" />
@@ -75,11 +107,36 @@ const MoviesPage = () => {
                 <TableCell>{movie.distributor}</TableCell>
                 <TableCell>{movie.time}</TableCell>
                 <TableCell>{movie.genres.join(", ")}</TableCell>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <EditMovie record={movie} refreshMovies={getMoviesData} />
+                    {id === movie._id ? (
+                      <Loader2 className="animate-spin" size={16} />
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => {
+                          setOpenOtp(true);
+                          setId(movie._id);
+                        }}
+                      >
+                        <Trash2 />
+                      </Button>
+                    )}
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        {movies.length === 0 && <NoData />}
       </div>
+      <Captcha
+        open={openOtp}
+        setOpen={setOpenOtp}
+        onVerified={handleOtpVerified}
+      />
     </div>
   );
 };
