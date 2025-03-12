@@ -53,6 +53,7 @@ const MoviesPage = () => {
     {
       name: "genre",
       type: "select",
+      placeholder: "Select a genre",
       options: genres.map((genre) => ({
         value: genre,
         label: genre,

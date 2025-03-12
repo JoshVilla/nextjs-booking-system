@@ -76,6 +76,8 @@ const EditMovie = ({
         toast.success(response.message);
         setOpen(false);
         refreshMovies();
+        setPosterPreview(null);
+        setCoverPreview(null);
       }
     } catch (error) {
       console.log(error);

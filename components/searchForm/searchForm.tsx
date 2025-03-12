@@ -164,7 +164,7 @@ const SearchForm: React.FC<any> = ({ api, result, searchProps }) => {
                       >
                         {/* @ts-ignore */}
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select a value" />
+                          <SelectValue placeholder={prop.placeholder} />
                         </SelectTrigger>
                         {/* @ts-ignore */}
                         <SelectContent position="popper">

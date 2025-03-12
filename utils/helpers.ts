@@ -36,16 +36,29 @@ export const deleteCloudinaryImage = async (publicId: string) => {
 
 export const replaceNewImagefromCurrentImage = async (
   collection: any,
-  id: string
+  id: string,
+  field: string
 ) => {
   try {
     await connectToDatabase();
     const res = await collection.findById(id); // Use findById instead of find
-    console.log(res, "from");
+
     if (res) {
-      const publicId = getCloudinaryPublicId(res.pictureUrl);
-      if (publicId) {
-        await deleteCloudinaryImage(publicId);
+      if (field === "poster") {
+        const publicId = getCloudinaryPublicId(res.posterUrl);
+        if (publicId) {
+          await deleteCloudinaryImage(publicId);
+        }
+      } else if (field === "cover") {
+        const publicId = getCloudinaryPublicId(res.coverUrl);
+        if (publicId) {
+          await deleteCloudinaryImage(publicId);
+        }
+      } else {
+        const publicId = getCloudinaryPublicId(res.pictureUrl);
+        if (publicId) {
+          await deleteCloudinaryImage(publicId);
+        }
       }
     }
   } catch (error) {
