@@ -1,0 +1,47 @@
+export type IApiResponse<T> = {
+  success?: boolean;
+  message: string;
+  data: T;
+  genres?: string[];
+};
+
+export interface IServiceParams {
+  [key: string]: any;
+}
+
+export interface IAddMovieParams {
+  title: string;
+  poster: File;
+  cover: File;
+  casts: string[];
+  genres: string[];
+  time: string;
+  description: string;
+  director: string;
+  producer: string;
+  distributor: string;
+}
+
+export interface IGetMoviesParams {
+  page?: number;
+  limit?: number;
+  title?: string;
+  genre?: string;
+}
+
+export interface IMovies {
+  _id: string;
+  title: string;
+  posterUrl: string;
+  coverUrl: string;
+  casts: string[];
+  genres: string[];
+  time: string;
+  description: string;
+  director: string;
+  producer: string;
+  distributor: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
