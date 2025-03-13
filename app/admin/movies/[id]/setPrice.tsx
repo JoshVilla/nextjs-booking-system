@@ -13,17 +13,16 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import TitlePage from "@/components/titlePage/titlePage";
 
 interface Seat {
   status: string;
-  selected: boolean;
   seatNumber: string;
   price: number | undefined;
 }
 const generateSeats = (prefix: string, count: number): Seat[] =>
   Array.from({ length: count }, (_, index) => ({
     status: "available",
-    selected: false,
     seatNumber: `${prefix}${index + 1}`,
     price: 100,
   }));
@@ -44,59 +43,6 @@ const SetPrice = ({ price }: { price: any }) => {
     generateSeats("B", 20)
   );
   const [rightSeats, setRightSeats] = useState<Seat[]>(generateSeats("C", 10));
-  const chooseSeat = (seatNumber: string) => {
-    const updateSeats = (seats: Seat[]) =>
-      seats.map((seat) =>
-        seat.seatNumber === seatNumber
-          ? { ...seat, selected: !seat.selected }
-          : seat
-      );
-
-    setLeftSeats((prev) => updateSeats(prev));
-    setCenterSeats((prev) => updateSeats(prev));
-    setRightSeats((prev) => updateSeats(prev));
-
-    getSelectedSeats(seatNumber);
-  };
-
-  const getSelectedSeats = (seatNumber: string) => {
-    setSelectedSeats((prev) => {
-      const updatedSeats = prev.some((seat) => seat.seatNumber === seatNumber)
-        ? prev.filter((seat) => seat.seatNumber !== seatNumber)
-        : [...prev, ...findSeat(seatNumber)];
-
-      // Update total price after modifying the selected seats
-
-      return updatedSeats;
-    });
-  };
-
-  const findSeat = (seatNumber: string): Seat[] => {
-    const allSeats = [...leftSeats, ...centerSeats, ...rightSeats];
-    return allSeats.filter((seat) => seat.seatNumber === seatNumber);
-  };
-
-  const colorSeat = [
-    "bg-blue-500",
-    "bg-yellow-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-orange-500",
-  ];
-
-  const handleSubmit = () => {
-    if (
-      priceSection.A === undefined ||
-      priceSection.B === undefined ||
-      priceSection.C === undefined ||
-      priceSection.A === 0 ||
-      priceSection.B === 0 ||
-      priceSection.C === 0
-    ) {
-      toast.error("Please set price for each section");
-      return;
-    }
-  };
 
   useEffect(() => {
     setLeftSeats((prev) =>
@@ -123,7 +69,8 @@ const SetPrice = ({ price }: { price: any }) => {
   }, [priceSection]);
 
   return (
-    <div className=" w-full flex  flex-col">
+    <div className=" w-full flex  flex-col mt-10">
+      <TitlePage title="Cinema Layout" />
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -141,10 +88,7 @@ const SetPrice = ({ price }: { price: any }) => {
               {leftSeats.map((seat) => (
                 <div
                   key={seat.seatNumber}
-                  className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
-                  } cursor-pointer hover:scale-110`}
-                  onClick={() => chooseSeat(seat.seatNumber)}
+                  className={"w-6 h-6 rounded-md bg-gray-500"}
                 />
               ))}
             </div>
@@ -162,10 +106,7 @@ const SetPrice = ({ price }: { price: any }) => {
               {centerSeats.map((seat) => (
                 <div
                   key={seat.seatNumber}
-                  className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
-                  } cursor-pointer hover:scale-110`}
-                  onClick={() => chooseSeat(seat.seatNumber)}
+                  className={"w-6 h-6 rounded-md bg-gray-500"}
                 />
               ))}
             </div>
@@ -183,10 +124,7 @@ const SetPrice = ({ price }: { price: any }) => {
               {rightSeats.map((seat) => (
                 <div
                   key={seat.seatNumber}
-                  className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
-                  } cursor-pointer hover:scale-110`}
-                  onClick={() => chooseSeat(seat.seatNumber)}
+                  className={"w-6 h-6 rounded-md bg-gray-500"}
                 />
               ))}
             </div>
@@ -194,16 +132,6 @@ const SetPrice = ({ price }: { price: any }) => {
               C Section
             </div>
           </div>
-        </div>
-        <div className="flex gap-2">
-          {selectedSeats.map((seat) => (
-            <div
-              key={seat.seatNumber}
-              className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                colorSeat[Math.floor(Math.random() * colorSeat.length)]
-              }`}
-            ></div>
-          ))}
         </div>
       </motion.div>
       <div className="w-full">

@@ -10,6 +10,8 @@ import {
   IEditCinemaParams,
   IDeleteCinemaParams,
   ICinemaSearchParams,
+  INowShowing,
+  IAddNowShowingParams,
 } from "./types";
 
 export const addMovie = async (
@@ -58,4 +60,19 @@ export const deleteCinema = async (
   params: any
 ): Promise<IApiResponse<IDeleteCinemaParams>> => {
   return await post<IDeleteCinemaParams>("/api/cinema/deleteCinema", params);
+};
+
+export const getNowShowing = async (
+  params: any
+): Promise<IApiResponse<INowShowing[]>> => {
+  return await post<INowShowing[]>("/api/nowShowing", params);
+};
+
+export const addNowShowing = async (
+  params: any
+): Promise<IApiResponse<IAddNowShowingParams>> => {
+  return await post<IAddNowShowingParams>(
+    "/api/nowShowing/addNowShowing",
+    params
+  );
 };

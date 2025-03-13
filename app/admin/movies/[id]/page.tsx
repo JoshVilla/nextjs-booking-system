@@ -2,28 +2,44 @@
 
 import TitlePage from "@/components/titlePage/titlePage";
 import { useParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store/store";
 import Image from "next/image";
 import { IMovies } from "@/app/service/types";
 import { Badge } from "@/components/ui/badge";
 import SetShedule from "./setShedule";
+import { clearMovie } from "@/app/redux/slices/movieSlice";
+import { motion } from "framer-motion";
 const MoviePage = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const movie = useSelector((state: RootState) => state.movie.movie) as IMovies;
 
   return (
     <div>
-      <TitlePage title="Movie Information" />
+      <TitlePage
+        title="Movie Information"
+        hasBack
+        clickBack={() => {
+          dispatch(clearMovie());
+        }}
+      />
       <div className="md:px-10 px-2 mt-10">
-        <Image
-          src={movie.coverUrl || ""}
-          alt={movie.title}
-          width={100}
-          height={100}
-          className="w-full h-64 object-cover  rounded-lg"
-          unoptimized
-        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Image
+            src={movie.coverUrl || ""}
+            alt={movie.title}
+            width={100}
+            height={100}
+            className="w-full h-64 object-cover  rounded-lg"
+            unoptimized
+          />
+        </motion.div>
         <div className="flex lg:flex-row flex-col gap-5 mt-10">
           <div className="flex-1 ">
             <div className="flex gap-4 items-start">

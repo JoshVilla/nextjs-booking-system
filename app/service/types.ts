@@ -47,6 +47,12 @@ export interface IMovies {
   __v: number;
 }
 
+export interface ISeat {
+  seatNumber: string;
+  price: number;
+  status: string;
+}
+
 export interface IDeleteMovieParams {
   movieId: string;
 }
@@ -92,4 +98,28 @@ export interface IDeleteCinemaParams {
 
 export interface ICinemaSearchParams {
   isOpen?: boolean;
+}
+
+export interface INowShowing {
+  _id: string;
+  movieId: string;
+  cinema: string;
+  time: string;
+  leftSeats: ISeat[];
+  centerSeats: ISeat[];
+  rightSeats: ISeat[];
+  titleMovie: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IAddNowShowingParams {
+  movieId: string;
+  cinema: string;
+  time: string;
+  leftSeats: ISeat[];
+  centerSeats: ISeat[];
+  rightSeats: ISeat[];
+  titleMovie: string;
 }

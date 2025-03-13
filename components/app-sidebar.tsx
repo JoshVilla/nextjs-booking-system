@@ -33,8 +33,8 @@ const items = [
     icon: Film,
   },
   {
-    title: "Bookings",
-    url: "/admin/bookings",
+    title: "Now Showing",
+    url: "/admin/now-showing",
     icon: Calendar,
   },
   {

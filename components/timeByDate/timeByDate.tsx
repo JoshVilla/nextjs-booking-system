@@ -101,6 +101,7 @@ const TimeByDate = ({
           custom={index}
         >
           <Button
+            size={"sm"}
             variant={selectedTime === time ? "default" : "outline"}
             className="w-24 cursor-pointer"
             onClick={() => setSelectedTime(time)}

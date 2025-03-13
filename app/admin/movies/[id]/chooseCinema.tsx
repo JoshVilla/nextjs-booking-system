@@ -51,6 +51,7 @@ const ChooseCinema = ({
             exit="hidden"
           >
             <Button
+              size={"sm"}
               key={cinema._id}
               onClick={() => {
                 setSelectedCinema(cinema.name);

@@ -11,6 +11,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/api/nowShowing/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/nowShowing/route.js"
+    ],
     "/admin/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -20,16 +25,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/page.js"
-    ],
-    "/admin/cinemas/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/admin/cinemas/page.js"
-    ],
-    "/api/cinema/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/cinema/route.js"
     ],
     "/admin/movies/page": [
       "static/chunks/webpack.js",
@@ -46,10 +41,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/movies/[id]/page.js"
     ],
-    "/api/cinema/editCinema/route": [
+    "/api/cinema/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/cinema/editCinema/route.js"
+      "static/chunks/app/api/cinema/route.js"
+    ],
+    "/api/nowShowing/addNowShowing/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/nowShowing/addNowShowing/route.js"
+    ],
+    "/admin/now-showing/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/now-showing/page.js"
     ]
   }
 }

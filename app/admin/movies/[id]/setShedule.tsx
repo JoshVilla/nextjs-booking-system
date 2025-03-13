@@ -18,6 +18,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store/store";
 import { IMovies } from "@/app/service/types";
 import ChooseCinema from "./chooseCinema";
+import { addNowShowing } from "@/app/service/api";
+import { toast } from "sonner";
 const SetShedule = () => {
   const movieState = useSelector(
     (state: RootState) => state.movie.movie
@@ -26,15 +28,38 @@ const SetShedule = () => {
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [seatPrice, setSeatPrice] = useState<any>();
   const [cinema, setCinema] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    console.log({
-      ...seatPrice,
-      time: `${format(date, "MMMM dd, yyyy")} ${selectedTime}`,
-      movieId: movieState._id,
-      cinema,
-    });
+  const handleSubmit = async (e: any) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      // console.log({
+      //   ...seatPrice,
+      //   time: `${format(date, "MMMM dd, yyyy")} ${selectedTime}`,
+      //   movieId: movieState._id,
+      //   cinema,
+      //   titleMovie: movieState.title,
+      // });
+
+      const response = await addNowShowing({
+        ...seatPrice,
+        time: `${format(date, "MMMM dd, yyyy")} ${selectedTime}`,
+        movieId: movieState._id,
+        cinema,
+        titleMovie: movieState.title,
+      });
+
+      if (response.message) {
+        setLoading(false);
+        toast.success(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to add now showing");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -72,7 +97,9 @@ const SetShedule = () => {
         />
         <ChooseCinema setCinema={setCinema} />
         <SetPrice price={setSeatPrice} />
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} disabled={loading}>
+          {loading ? "Adding..." : "Add"}
+        </Button>
       </div>
     </div>
   );
