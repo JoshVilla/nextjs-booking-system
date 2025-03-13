@@ -9,6 +9,7 @@ import {
   IAddCinemaParams,
   IEditCinemaParams,
   IDeleteCinemaParams,
+  ICinemaSearchParams,
 } from "./types";
 
 export const addMovie = async (
@@ -35,8 +36,10 @@ export const editMovie = async (
   return await post<IEditMovieParams>("/api/movie/editMovie", params, true);
 };
 
-export const getCinemas = async (): Promise<IApiResponse<ICinema[]>> => {
-  return await post<ICinema[]>("/api/cinema");
+export const getCinemas = async (
+  params: ICinemaSearchParams
+): Promise<IApiResponse<ICinema[]>> => {
+  return await post<ICinema[]>("/api/cinema", params);
 };
 
 export const addCinema = async (

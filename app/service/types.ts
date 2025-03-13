@@ -89,3 +89,7 @@ export interface IEditCinemaParams {
 export interface IDeleteCinemaParams {
   cinemaId: string;
 }
+
+export interface ICinemaSearchParams {
+  isOpen?: boolean;
+}

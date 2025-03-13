@@ -14,7 +14,7 @@ const Cinemas = () => {
   const [cinemaToEdit, setCinemaToEdit] = useState<ICinema | null>(null);
   const fetchCinemas = async () => {
     try {
-      const response = await getCinemas();
+      const response = await getCinemas({});
       setCinemas(response.data);
     } catch (error) {
       console.error(error);

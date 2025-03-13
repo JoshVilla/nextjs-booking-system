@@ -7,11 +7,11 @@ import { RootState } from "@/app/redux/store/store";
 import Image from "next/image";
 import { IMovies } from "@/app/service/types";
 import { Badge } from "@/components/ui/badge";
-import { Calendar } from "lucide-react";
+import SetShedule from "./setShedule";
 const MoviePage = () => {
   const { id } = useParams();
   const movie = useSelector((state: RootState) => state.movie.movie) as IMovies;
-  console.log(movie);
+
   return (
     <div>
       <TitlePage title="Movie Information" />
@@ -81,11 +81,7 @@ const MoviePage = () => {
             </div>
           </div>
           <div className="flex-1 ">
-            <div className="md:text-2xl text-xl font-bold flex gap-2 items-center">
-              <Calendar />
-              <span> Set Movie Schedules</span>
-            </div>
-            <div></div>
+            <SetShedule />
           </div>
         </div>
       </div>
