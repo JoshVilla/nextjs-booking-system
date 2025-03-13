@@ -55,6 +55,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/now-showing/page.js"
+    ],
+    "/admin/cinemas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/admin/cinemas/page.js"
+    ],
+    "/api/cinema/editCinema/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/cinema/editCinema/route.js"
     ]
   }
 }

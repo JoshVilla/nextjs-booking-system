@@ -11,19 +11,40 @@ import {
   TableCell,
   TableBody,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+
 import NoData from "@/components/nodata/noData";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "@/app/redux/store/store";
+import { fetchApiCinemas } from "@/app/redux/slices/cinemaSlice";
+import SearchForm from "@/components/searchForm/searchForm";
 const NowShowing = () => {
+  const dispatch = useDispatch();
+  const { cinemas } = useSelector((state: RootState) => state.cinema);
   const [nowShowing, setNowShowing] = useState<INowShowing[]>([]);
 
   const fetchNowShowing = async () => {
     try {
+      // @ts-ignore
+      dispatch(fetchApiCinemas({ isOpen: true }));
       const response = await getNowShowing({});
       setNowShowing(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const newSearchProps = [
+    {
+      name: "cinema",
+      placeholder: "Select Cinema",
+      type: "select",
+      options: cinemas.map((item) => ({
+        label: item.name,
+        value: item._id,
+      })),
+    },
+  ];
   useEffect(() => {
     fetchNowShowing();
   }, []);
@@ -32,6 +53,11 @@ const NowShowing = () => {
       <TitlePage title="Now Showing" />
 
       <div className="mt-10">
+        <SearchForm
+          searchProps={newSearchProps}
+          api={fetchNowShowing}
+          result={setNowShowing}
+        />
         <Table>
           <TableHeader>
             <TableRow>

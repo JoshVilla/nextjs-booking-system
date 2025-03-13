@@ -3,17 +3,18 @@ import movieReducer from "../slices/movieSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage"; // ✅ Uses localStorage
 import { persistReducer, persistStore } from "redux-persist";
-
+import cinemaReducer from "../slices/cinemaSlice";
 // ✅ Persist Config: Store both "user" and "graph"
 const persistConfig = {
   key: "root", // ✅ Keep as "root" since we have multiple slices
   storage,
-  whitelist: ["movie"], // ✅ Persist both user & graph slices
+  whitelist: ["movie", "cinema"], // ✅ Persist both user & graph slices
 };
 
 // ✅ Combine Reducers
 const rootReducer = combineReducers({
   movie: movieReducer,
+  cinema: cinemaReducer,
 });
 
 // ✅ Apply persistReducer to combined reducer

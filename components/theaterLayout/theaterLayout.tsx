@@ -10,7 +10,7 @@ interface Seat {
 
 const generateSeats = (prefix: string, count: number): Seat[] =>
   Array.from({ length: count }, (_, index) => ({
-    status: "available",
+    status: "unavailable",
     selected: false,
     seatNumber: `${prefix}${index + 1}`,
     price: 100,
@@ -93,7 +93,11 @@ const TheaterLayout = () => {
                 <div
                   key={seat.seatNumber}
                   className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
+                    seat.status === "available"
+                      ? "bg-blue-500"
+                      : seat.status === "selected"
+                      ? "bg-green-500"
+                      : "bg-gray-500"
                   } cursor-pointer hover:scale-110`}
                   onClick={() => chooseSeat(seat.seatNumber)}
                 />
@@ -109,7 +113,7 @@ const TheaterLayout = () => {
                 <div
                   key={seat.seatNumber}
                   className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
+                    seat.status ? "bg-blue-500" : "bg-gray-500"
                   } cursor-pointer hover:scale-110`}
                   onClick={() => chooseSeat(seat.seatNumber)}
                 />
@@ -125,7 +129,7 @@ const TheaterLayout = () => {
                 <div
                   key={seat.seatNumber}
                   className={`w-6 h-6 rounded-md transition-all duration-300 ${
-                    seat.selected ? "bg-blue-500" : "bg-gray-500"
+                    seat.status ? "bg-blue-500" : "bg-gray-500"
                   } cursor-pointer hover:scale-110`}
                   onClick={() => chooseSeat(seat.seatNumber)}
                 />

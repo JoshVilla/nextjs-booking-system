@@ -91,7 +91,9 @@ const SearchForm: React.FC<any> = ({ api, result, searchProps }) => {
       }
     });
     const res = await api();
-    result(res.data);
+    if (res) {
+      result(res.data);
+    }
   };
 
   // Handle the search functionality
@@ -99,7 +101,9 @@ const SearchForm: React.FC<any> = ({ api, result, searchProps }) => {
     try {
       setLoadingSearch(true);
       const res = await api(params);
-      result(res.data);
+      if (res) {
+        result(res.data);
+      }
     } catch (error) {
       console.log(error);
     } finally {

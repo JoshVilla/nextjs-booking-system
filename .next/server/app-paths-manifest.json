@@ -1,9 +1,7 @@
 {
-  "/api/movie/route": "app/api/movie/route.js",
-  "/api/nowShowing/route": "app/api/nowShowing/route.js",
-  "/page": "app/page.js",
   "/admin/page": "app/admin/page.js",
-  "/admin/movies/page": "app/admin/movies/page.js",
   "/admin/movies/[id]/page": "app/admin/movies/[id]/page.js",
+  "/admin/cinemas/page": "app/admin/cinemas/page.js",
+  "/admin/movies/page": "app/admin/movies/page.js",
   "/admin/now-showing/page": "app/admin/now-showing/page.js"
 }

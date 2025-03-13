@@ -1,3 +1,4 @@
+"use client";
 import {
   Calendar,
   Film,
@@ -20,6 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useRouter } from "next/navigation";
 // Menu items.
 const items = [
   {
@@ -45,6 +47,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const router = useRouter();
   return (
     <Sidebar>
       <SidebarContent>
@@ -64,7 +67,7 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title} className="rounded-lg mb-2">
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a onClick={() => router.push(item.url)}>
                       <item.icon className="text-muted-foreground" />
                       <span>{item.title}</span>
                     </a>
