@@ -67,7 +67,10 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title} className="rounded-lg mb-2">
                   <SidebarMenuButton asChild>
-                    <a onClick={() => router.push(item.url)}>
+                    <a
+                      onClick={() => router.push(item.url)}
+                      className="cursor-pointer"
+                    >
                       <item.icon className="text-muted-foreground" />
                       <span>{item.title}</span>
                     </a>

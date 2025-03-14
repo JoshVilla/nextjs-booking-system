@@ -5,15 +5,22 @@ import { connectToDatabase } from "@/lib/mongodb";
 export async function POST(request: NextRequest) {
   try {
     await connectToDatabase();
-    const { cinema, date } = await request.json();
+    const { name, date, id, cinema } = await request.json();
     let params: any = {};
-    if (cinema) {
-      params.cinema = cinema;
+    if (name) {
+      params.name = name;
     }
     if (date) {
       params.date = date;
     }
+    if (id) {
+      params._id = id;
+    }
+    if (cinema) {
+      params.cinema = cinema;
+    }
     const nowShowing = await NowShowing.find(params);
+
     const total = await NowShowing.countDocuments();
     const totalPages = Math.ceil(total / 10);
     const currentPage = 1;

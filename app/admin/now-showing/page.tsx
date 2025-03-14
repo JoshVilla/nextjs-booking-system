@@ -17,22 +17,15 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "@/app/redux/store/store";
 import { fetchApiCinemas } from "@/app/redux/slices/cinemaSlice";
-import SearchForm from "@/components/searchForm/searchForm";
+import { Button } from "@/components/ui/button";
+import { Eye } from "lucide-react";
+import { useRouter } from "next/navigation";
+import CTable from "@/components/table/cTable";
 const NowShowing = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { cinemas } = useSelector((state: RootState) => state.cinema);
-  const [nowShowing, setNowShowing] = useState<INowShowing[]>([]);
-
-  const fetchNowShowing = async () => {
-    try {
-      // @ts-ignore
-      dispatch(fetchApiCinemas({ isOpen: true }));
-      const response = await getNowShowing({});
-      setNowShowing(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [cinema, setCinema] = useState<string>("");
 
   const newSearchProps = [
     {
@@ -41,48 +34,40 @@ const NowShowing = () => {
       type: "select",
       options: cinemas.map((item) => ({
         label: item.name,
-        value: item._id,
+        value: item.name,
       })),
     },
   ];
+
+  const columns = [
+    { label: "Movie", key: "titleMovie", param: "titleMovie" },
+    { label: "Cinema", key: "cinema", param: "cinema" },
+    { label: "Time of Showing", key: "time", param: "time" },
+  ];
+
   useEffect(() => {
-    fetchNowShowing();
+    //@ts-ignore
+    dispatch(fetchApiCinemas({ isOpen: true }));
   }, []);
   return (
     <div>
       <TitlePage title="Now Showing" />
-
-      <div className="mt-10">
-        <SearchForm
-          searchProps={newSearchProps}
-          api={fetchNowShowing}
-          result={setNowShowing}
-        />
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {["Movie", "Cinema", "Time of Showing", "Action"].map((item) => (
-                <TableHead key={item}>{item}</TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {nowShowing.map((item) => (
-              <TableRow key={item._id}>
-                <TableCell>{item.titleMovie}</TableCell>
-                <TableCell>{item.cinema}</TableCell>
-                <TableCell>{item.time}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        {nowShowing.length === 0 && (
-          <div className="flex justify-center items-center h-full">
-            <NoData />
-          </div>
-        )}
-      </div>
+      <CTable
+        columns={columns}
+        searchProps={newSearchProps}
+        api={getNowShowing}
+        lastColumn={(record: INowShowing) => {
+          return (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.push(`/admin/now-showing/${record._id}`)}
+            >
+              <Eye />
+            </Button>
+          );
+        }}
+      />
     </div>
   );
 };

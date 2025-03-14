@@ -54,6 +54,12 @@ const SetShedule = () => {
         setLoading(false);
         toast.success(response.message);
       }
+      if (response.error) {
+        setLoading(false);
+        toast.error(response.error, {
+          style: { backgroundColor: "#ff4d4f", color: "white" },
+        });
+      }
     } catch (error) {
       console.log(error);
       toast.error("Failed to add now showing");

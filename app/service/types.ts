@@ -3,6 +3,8 @@ export type IApiResponse<T> = {
   message: string;
   data: T;
   genres?: string[];
+  isAvailable?: boolean;
+  error?: string;
 };
 
 export interface IServiceParams {
@@ -121,5 +123,11 @@ export interface IAddNowShowingParams {
   leftSeats: ISeat[];
   centerSeats: ISeat[];
   rightSeats: ISeat[];
+  titleMovie: string;
+}
+
+export interface ICheckAvailableNowShowingParams {
+  cinema: string;
+  time: string;
   titleMovie: string;
 }

@@ -100,6 +100,7 @@ const SearchForm: React.FC<any> = ({ api, result, searchProps }) => {
   const handleSearch = async (params: FormValues) => {
     try {
       setLoadingSearch(true);
+      result([]);
       const res = await api(params);
       if (res) {
         result(res.data);
