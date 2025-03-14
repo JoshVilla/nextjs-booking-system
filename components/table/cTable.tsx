@@ -21,9 +21,16 @@ interface CTableProps<T> {
   searchProps: any;
   api: (params?: any) => Promise<{ data: T[] }>;
   lastColumn: (record: T) => React.ReactNode | undefined;
+  getData: (data: T[]) => void;
 }
 
-const CTable: React.FC<any> = ({ columns, searchProps, api, lastColumn }) => {
+const CTable: React.FC<any> = ({
+  columns,
+  searchProps,
+  api,
+  lastColumn,
+  getData,
+}) => {
   const [data, setData] = useState<any[]>([]);
   const [newColumns, setNewColumns] = useState<IColumn[]>([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +42,7 @@ const CTable: React.FC<any> = ({ columns, searchProps, api, lastColumn }) => {
       if (response.data) {
         setLoading(false);
         setData(response.data);
+        getData(response.data);
       }
     } catch (error) {
       console.log(error);

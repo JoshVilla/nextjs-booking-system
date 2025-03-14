@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import CTable from "@/components/table/cTable";
+import { motion } from "framer-motion";
 const NowShowing = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -50,7 +51,12 @@ const NowShowing = () => {
     dispatch(fetchApiCinemas({ isOpen: true }));
   }, []);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -100 }}
+      transition={{ duration: 0.2 }}
+    >
       <TitlePage title="Now Showing" />
       <CTable
         columns={columns}
@@ -68,7 +74,7 @@ const NowShowing = () => {
           );
         }}
       />
-    </div>
+    </motion.div>
   );
 };
 

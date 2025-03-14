@@ -9,6 +9,11 @@ interface Seat {
   price: number;
 }
 
+interface ICountSeats {
+  available: number;
+  booked: number;
+}
+
 const generateSeats = (prefix: string, count: number): Seat[] =>
   Array.from({ length: count }, (_, index) => ({
     status: "unavailable",
@@ -21,10 +26,12 @@ const CinemaSeats = ({
   leftSeatsProp,
   centerSeatsProp,
   rightSeatsProp,
+  countSeats,
 }: {
   leftSeatsProp: ISeat[];
   centerSeatsProp: ISeat[];
   rightSeatsProp: ISeat[];
+  countSeats: ICountSeats;
 }) => {
   const [leftSeats, setLeftSeats] = useState<ISeat[]>([]);
   const [centerSeats, setCenterSeats] = useState<ISeat[]>([]);
@@ -107,6 +114,7 @@ const CinemaSeats = ({
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-2">
+            <span className="text-sm font-bold">{countSeats.available}</span>
             <div className="w-4 h-4 bg-gray-500 rounded-md" />
             <div>Available</div>
           </div>
@@ -118,6 +126,7 @@ const CinemaSeats = ({
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center gap-2">
+            <span className="text-sm font-bold">{countSeats.booked}</span>
             <div className="w-4 h-4 bg-blue-500 rounded-md" />
             <div>Booked</div>
           </div>
