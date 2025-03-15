@@ -21,7 +21,9 @@ const MoviePage = () => {
         title="Movie Information"
         hasBack
         clickBack={() => {
-          dispatch(clearMovie());
+          setTimeout(() => {
+            dispatch(clearMovie());
+          }, 500);
         }}
       />
       <div className="md:px-10 px-2 mt-10">

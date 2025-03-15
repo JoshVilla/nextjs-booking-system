@@ -4,17 +4,24 @@ import * as React from "react";
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { getMovies } from "./service/api";
+import { getHomeData, getMovies } from "./service/api";
 import { IMovies, INowShowing } from "./service/types";
+import NowShowing from "./nowShowing";
+import ComingSoon from "./comingSoon";
 export default function Home() {
   const { setTheme } = useTheme();
   const [nowShowing, setNowShowing] = useState<IMovies[]>([]);
+  const [comingSoon, setComingSoon] = useState<IMovies[]>([]);
 
   const fetchNowShowing = async () => {
-    const response = await getMovies({});
-
-    if (response.data) {
-      setNowShowing(response.data);
+    try {
+      const response = await getHomeData({});
+      if (response.data) {
+        setNowShowing(response.data.nowShowing);
+        setComingSoon(response.data.comingSoon);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -28,7 +35,8 @@ export default function Home() {
         <div className="text-2xl font-bold">Movie Prime</div>
       </div>
       <div className="mt-10">
-        <div className="text-2xl font-bold">Now Showing</div>
+        <NowShowing data={nowShowing} />
+        <ComingSoon data={comingSoon} />
       </div>
     </div>
   );

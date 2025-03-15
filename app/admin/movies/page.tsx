@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Trash2, Loader2, Eye } from "lucide-react";
+import { Trash2, Loader2, Eye, Info } from "lucide-react";
 
 import TitlePage from "@/components/titlePage/titlePage";
 import AddMovie from "./addMovie";
@@ -31,6 +31,11 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovie } from "@/app/redux/slices/movieSlice";
 import { motion } from "framer-motion";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 const MoviesPage = () => {
   const form = useForm({
     defaultValues: {
@@ -124,6 +129,20 @@ const MoviesPage = () => {
     }
   };
 
+  const movieInfo = () => {
+    return (
+      <div>
+        <p className="text-xs text-gray-500">
+          If a movie is <span className="font-bold">active</span>, you can add a
+          schedule, and it will automatically appear in the "Now Showing"
+          section on the main site. If it is{" "}
+          <span className="font-bold">inactive</span>, it will be displayed in
+          the "Coming Soon" section, but you cannot add a schedule for it.
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="w-full">
       <TitlePage title="Movies" />
@@ -142,9 +161,24 @@ const MoviesPage = () => {
         <Table className="mt-4">
           <TableHeader>
             <TableRow>
-              {tableHeaders.map((header) => (
-                <TableHead key={header.key}>{header.title}</TableHead>
-              ))}
+              {tableHeaders.map((header) =>
+                header.key === "nowShowing" ? (
+                  <TableHead
+                    key={header.key}
+                    className="flex items-center gap-4"
+                  >
+                    {header.title}
+                    <Popover>
+                      <PopoverTrigger>
+                        <Info size={15} className="cursor-pointer" />
+                      </PopoverTrigger>
+                      <PopoverContent>{movieInfo()}</PopoverContent>
+                    </Popover>
+                  </TableHead>
+                ) : (
+                  <TableHead key={header.key}>{header.title}</TableHead>
+                )
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -183,16 +217,18 @@ const MoviesPage = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => {
-                        router.push(`/admin/movies/${movie._id}`);
-                        dispatch(setMovie(movie));
-                      }}
-                    >
-                      <Eye size={16} />
-                    </Button>
+                    {movie.isShowing && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => {
+                          router.push(`/admin/movies/${movie._id}`);
+                          dispatch(setMovie(movie));
+                        }}
+                      >
+                        <Eye size={16} />
+                      </Button>
+                    )}
                     <EditMovie record={movie} refreshMovies={getMoviesData} />
                     <Button
                       variant="ghost"

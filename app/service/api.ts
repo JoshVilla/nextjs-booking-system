@@ -96,3 +96,7 @@ export const getNowShowingDetails = async (
     params
   );
 };
+
+export const getHomeData = async (params: any): Promise<IApiResponse<any>> => {
+  return await post<any>("/api/main", params);
+};

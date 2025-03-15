@@ -11,6 +11,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
+    "/api/movie/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/movie/route.js"
+    ],
     "/admin/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -26,55 +31,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/now-showing/page.js"
     ],
-    "/api/nowShowing/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/nowShowing/route.js"
-    ],
-    "/api/cinema/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/cinema/route.js"
-    ],
-    "/admin/now-showing/[id]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/admin/now-showing/[id]/page.js"
-    ],
-    "/api/nowShowing/nowShowingDetails/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/nowShowing/nowShowingDetails/route.js"
-    ],
     "/admin/movies/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/movies/page.js"
     ],
-    "/api/movie/route": [
+    "/api/movie/editMovie/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/movie/route.js"
+      "static/chunks/app/api/movie/editMovie/route.js"
     ],
     "/admin/movies/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/admin/movies/[id]/page.js"
     ],
-    "/admin/cinemas/page": [
+    "/api/cinema/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/cinemas/page.js"
+      "static/chunks/app/api/cinema/route.js"
     ],
-    "/api/nowShowing/addNowShowing/route": [
+    "/api/main/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/nowShowing/addNowShowing/route.js"
+      "static/chunks/app/api/main/route.js"
     ],
-    "/admin/now-showing/[id]/loading": [
+    "/api/nowShowing/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/admin/now-showing/[id]/loading.js"
+      "static/chunks/app/api/nowShowing/route.js"
     ]
   }
 }

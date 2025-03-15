@@ -43,7 +43,7 @@ const NowShowing = () => {
   const columns = [
     { label: "Movie", key: "titleMovie", param: "titleMovie" },
     { label: "Cinema", key: "cinema", param: "cinema" },
-    { label: "Time of Showing", key: "time", param: "time" },
+    { label: "Schedule", key: "time", param: "time" },
   ];
 
   useEffect(() => {
