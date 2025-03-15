@@ -52,10 +52,9 @@ const NowShowing = () => {
   }, []);
   return (
     <motion.div
-      initial={{ opacity: 0, y: 100 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -100 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.5 }}
     >
       <TitlePage title="Now Showing" />
       <CTable
@@ -68,6 +67,7 @@ const NowShowing = () => {
               variant="ghost"
               size="icon"
               onClick={() => router.push(`/admin/now-showing/${record._id}`)}
+              className="cursor-pointer"
             >
               <Eye />
             </Button>

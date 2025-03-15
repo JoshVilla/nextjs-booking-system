@@ -76,7 +76,7 @@ const SetPrice = ({ price }: { price: any }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.5 }}
-        className="text-center w-full sm:w-[400px] my-10 "
+        className="text-center w-full sm:w-[400px] my-10 mx-auto "
       >
         <div className="w-full h-2 bg-white shadow-md rounded-2xl shadow-indigo-500"></div>
         <div className="mt-2 text-lg font-bold text-gray-700">Screen</div>

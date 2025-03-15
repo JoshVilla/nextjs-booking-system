@@ -1,42 +1,35 @@
 "use client";
 
 import * as React from "react";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { getMovies } from "./service/api";
+import { IMovies, INowShowing } from "./service/types";
 export default function Home() {
-  const [date, setDate] = React.useState<Date>();
+  const { setTheme } = useTheme();
+  const [nowShowing, setNowShowing] = useState<IMovies[]>([]);
 
+  const fetchNowShowing = async () => {
+    const response = await getMovies({});
+
+    if (response.data) {
+      setNowShowing(response.data);
+    }
+  };
+
+  useEffect(() => {
+    setTheme("dark");
+    fetchNowShowing();
+  }, []);
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[240px] justify-start text-left font-normal",
-            !date && "text-muted-foreground"
-          )}
-        >
-          <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <div>
+      <div className="w-full bg-accent px-6 py-4">
+        <div className="text-2xl font-bold">Movie Prime</div>
+      </div>
+      <div className="mt-10">
+        <div className="text-2xl font-bold">Now Showing</div>
+      </div>
+    </div>
   );
 }

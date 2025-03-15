@@ -30,7 +30,7 @@ import { searchProps } from "./searchProps";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { setMovie } from "@/app/redux/slices/movieSlice";
-
+import { motion } from "framer-motion";
 const MoviesPage = () => {
   const form = useForm({
     defaultValues: {
@@ -127,7 +127,12 @@ const MoviesPage = () => {
   return (
     <div className="w-full">
       <TitlePage title="Movies" />
-      <div className="mt-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mt-4"
+      >
         <AddMovie setMovies={setMovies} />
         <SearchForm
           searchProps={newSearchProps}
@@ -211,7 +216,7 @@ const MoviesPage = () => {
           </TableBody>
         </Table>
         {movies.length === 0 && <NoData />}
-      </div>
+      </motion.div>
       <Captcha
         open={openOtp}
         setOpen={setOpenOtp}

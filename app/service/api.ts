@@ -13,6 +13,7 @@ import {
   INowShowing,
   IAddNowShowingParams,
   ICheckAvailableNowShowingParams,
+  INowShowingDetailsParams,
 } from "./types";
 
 export const addMovie = async (
@@ -83,6 +84,15 @@ export const checkAvailableNowShowing = async (
 ): Promise<IApiResponse<ICheckAvailableNowShowingParams>> => {
   return await post<ICheckAvailableNowShowingParams>(
     "/api/check/availableNowShowing",
+    params
+  );
+};
+
+export const getNowShowingDetails = async (
+  params: any
+): Promise<IApiResponse<INowShowingDetailsParams>> => {
+  return await post<INowShowingDetailsParams>(
+    "/api/nowShowing/nowShowingDetails",
     params
   );
 };

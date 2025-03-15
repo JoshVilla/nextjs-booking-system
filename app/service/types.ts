@@ -131,3 +131,17 @@ export interface ICheckAvailableNowShowingParams {
   time: string;
   titleMovie: string;
 }
+
+export interface INowShowingDetailsParams {
+  data: {
+    _id: string;
+    movieId: string;
+    cinema: string;
+    time: string;
+    leftSeats: ISeat[];
+    centerSeats: ISeat[];
+    rightSeats: ISeat[];
+    titleMovie: string;
+  };
+  otherSchedule: INowShowing[];
+}

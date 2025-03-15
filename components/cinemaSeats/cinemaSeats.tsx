@@ -52,7 +52,7 @@ const CinemaSeats = ({
         transition={{ duration: 0.3 }}
       >
         <div className="text-center w-full sm:w-[400px] mb-10">
-          <div className="w-full h-2 bg-white shadow-md rounded-2xl shadow-indigo-500"></div>
+          <div className="w-full h-2 bg-white shadow-md rounded-2xl shadow-indigo-500" />
           <div className="mt-2 text-lg font-bold text-gray-700">Screen</div>
 
           {/* Seat Layout */}
